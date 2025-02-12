@@ -1,0 +1,80 @@
+{% extends "main_template.html" %} {% block content %}
+
+<!-- Breadcrumb Begin -->
+<br /><br /><br /><br /><br /><br /><br /><br />
+<div class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="breadcrumb__text">
+          <h2>Shop</h2>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="breadcrumb__links">
+          <a href="/">Home</a>
+          <span>Shop</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+  <div class="container">
+    <div class="shop__option">
+      <div class="row">
+        <div class="col-lg-7 col-md-7">
+          <div class="shop__option__search">
+            <form action="#">
+              <input type="text" id="search-input" placeholder="Search" />
+              <button type="button" id="search-button">
+                <i class="fa fa-search"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-5">
+          <div class="shop__option__right"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="product-container">
+      {% for user in users %}
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="product__item">
+          <div
+            class="product__item__pic set-bg edges"
+            data-setbg="{{ url_for('static', filename='img/upload_folder/' + user[2]) }}"
+          >
+            <div class="product__label">
+              <span>{{ user[4] }}</span>
+            </div>
+          </div>
+          <div class="product__item__text">
+            <h6><a href="/contact">{{ user[1] }}</a></h6>
+            <div class="product__item__price">{{ user[3] }}</div>
+            <div class="cart_add">
+              <a href="/contact">Add to cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="shop__last__option">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6"></div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="shop__last__text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Shop Section End -->
+
+{% endblock %}

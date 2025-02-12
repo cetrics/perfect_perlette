@@ -1,0 +1,96 @@
+{% extends "main_template.html" %}
+
+{% block content %}
+
+   <!-- Contact Section Begin -->
+   <br><br><br><br><br><br><br><br><section class="contact spad">
+    <div class="container">
+        <div class="map">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-4 col-md-7">
+                        <div class="map__inner">
+                            <h6>Perfect Palete</h6>
+                            <ul>
+                                <li>Kajiado, 57907-00200, Kenya</li>
+                                <li>perfectpalete@support.com</li>
+                                <li>+254 719-585-252</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="map__iframe">
+                <iframe 
+                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15954.32328786985!2d36.68217434049047!3d-1.427067825774326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f012511905b11%3A0xddf2a222b3bf70c4!2sKiserian!5e0!3m2!1sen!2ske!4v1736430356348!5m2!1sen!2ske" 
+                 width="600" 
+                 height="300" 
+                 style="border:0;" 
+                 allowfullscreen="" 
+                 loading="lazy" 
+                 class="edges"
+                 aria-hidden="false"
+                 referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        <div class="contact__address">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="contact__address__item">
+                        <h6>Kiserian, Nairobi</h6>
+                        <ul>
+                            <li>
+                                <span class="icon_pin_alt"></span>
+                                <p>Kajiado, 57907-00200, Kenya</p>
+                            </li>
+                            <li><span class="icon_headphones"></span>
+                                <p>+254 719-585-252</p>
+                            </li>
+                            <li><span class="icon_mail_alt"></span>
+                                <p>perfectpalete@support.com</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="contact__text">
+                    <h3>Contact With us</h3>
+                    <ul>
+                        <li>Representatives or Advisors are available:</li>
+                        <li>Mon-Fri: 8:00am to 4:00pm</li>
+                        <li>Sat: 8:00am to 4:00pm</li>
+                        <li>Sat: Not available</li>
+                    </ul>
+                    <img src="img/cake-piece.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="contact__form">
+                    <div id="comments-section" > </div>
+                    <form method="post" id="contactForm" action="/contact">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="text" class="edges" name="name" placeholder="Name" id="contact_name">
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="edges"  name="email" placeholder="Email" id="contact_email">
+                            </div>
+                            <div class="col-lg-12">
+                                <textarea name="message" class="edges"  placeholder="Message" id="contact_message"></textarea>
+                                <button type="submit" class="site-btn edges" id="contact_submit">Send Us</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact Section End -->
+{% endblock %} 
+
+    

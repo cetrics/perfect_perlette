@@ -1,0 +1,112 @@
+{% extends "main_template.html" %} {% block content %}
+
+<!-- Blog Hero Begin --><br /><br /><br /><br /><br /><br /><br />
+{% if user %}
+<div
+  class="blog-hero set-bg"
+  data-setbg="{{ url_for('static', filename='img/upload_folder/' + user[2]) }}"
+>
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-7">
+        <div class="blog__hero__text edges">
+          <div class="label edges">Recipes</div>
+          <h2>{{ user[0] }}</h2>
+          <ul>
+            <li>By <span>{{ user[5] }}</span></li>
+            <li>{{ user[4] }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Blog Hero End -->
+
+<!-- Blog Details Section Begin -->
+<section class="blog-details spad">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-8">
+        <div class="blog__details__content">
+          <div class="blog__details__share">
+            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="youtube"><i class="fa fa-youtube-play"></i></a>
+            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+          </div>
+          <div class="blog__details__text">
+            <p>{{ user[3]|safe }}</p>
+          </div>
+          <br /><br />
+          <div class="blog__details__comment">
+            <h5>
+              <span id="comment-count">{{ comments | length }}</span> Comments
+            </h5>
+            <a
+              href="#"
+              id="openPopup"
+              onclick="toggleContent(event)"
+              class="primary-btn edges"
+              >Leave a Comment</a
+            >
+
+            <div id="popup">
+              <form id="myForm" method="post" action="/submit-comment">
+                <input
+                  name="comment_author"
+                  type="text"
+                  id="input-field"
+                  placeholder="Type your Name"
+                  required
+                />
+                <textarea
+                  name="blog_comment"
+                  id="comment-field"
+                  placeholder="Type your Comment"
+                  required
+                ></textarea>
+                <input name="blog_id_fk" type="hidden" value="{{ user[1] }}" />
+                <div class="align-right">
+                  <button
+                    type="submit"
+                    class="oval-button"
+                    id="submitButton"
+                    disabled
+                  >
+                    Comment
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Existing Comments -->
+            <div id="comments-section">
+              {% for comment in comments %}
+              <div class="blog__details__comment__item">
+                <div class="blog__details__comment__item__pic">
+                  <img
+                    src="static/img/blog/details/avatar.jpg"
+                    width="90"
+                    height="90"
+                    alt=""
+                  />
+                </div>
+                <div class="blog__details__comment__item__text">
+                  <h6>{{ comment[3] }}</h6>
+                  <span>{{ comment[4] }}</span>
+                  <p>{{ comment[0] }}</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Details Section End -->
+{% else %}
+<p>No blog found.</p>
+{% endif %} {% endblock %}

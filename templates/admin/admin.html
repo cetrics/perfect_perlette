@@ -1,0 +1,76 @@
+
+ <!--Search bar Section-->
+ <link rel="stylesheet" href="static/admin/app.css">
+ <div class="search-container">
+  <input 
+    type="text" 
+    id="search-bar" 
+    placeholder="Search here..." 
+    oninput="handleSearch(this.value)"
+  />
+ </div>
+
+  <!--Summery Section-->
+  <div class="stats-container">
+    <div class="stat-box">
+      <h4>Total Orders</h4>
+      <p>1,234</p>
+    </div>
+    <div class="stat-box">
+      <h4>Total Blogs</h4>
+      <p>56</p>
+    </div>
+    <div class="stat-box">
+      <h4>Total Visitors</h4>
+      <p>78,910</p>
+    </div>
+  </div>
+<!--End of Summery Section-->  
+  <table class="responsive-table">
+    <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Phone Number</th>
+        <th>Order Number</th>
+        <th>Order</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for user in users %} 
+      <tr>
+        <td data-label="Customer">{{ user[0] }}</td>
+        <td data-label="Phone Number">{{ user[1] }}</td>
+        <td data-label="Order Number">PPOO{{ user[3] }}</td>
+        <td data-label="Order">
+          {% set words = user[2].split() %}
+          {% if words|length > 4 %}
+            {{ words[:4]|join(' ') }}... 
+            <a href="#" class="read-more" data-message="{{ user[2] }}">Read More</a>
+          {% else %}
+            {{ user[2] }}
+          {% endif %}
+        </td>        
+        <td data-label="Date">2025-01-15</td>
+        <td data-label="Status">
+          <select class="status-select" data-order-id="{{ user[3] }}">
+            <option value="Pending" {% if user[4] == "Pending" %}selected{% endif %}>Pending</option>
+            <option value="Delivered" {% if user[4] == "Delivered" %}selected{% endif %}>Delivered</option>
+          </select>
+          </td>
+      </tr>
+     {% endfor %}
+    </tbody>
+  </table>
+
+
+<!-- Modal HTML -->
+<!-- Modal HTML -->
+<div id="message-modal">
+  <div>
+    <p id="modal-content">Full message will appear here.</p>
+    <button id="close-modal">Close</button>
+  </div>
+</div>
+<script src="static/admin/app2.js"></script>	

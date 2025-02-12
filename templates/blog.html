@@ -1,0 +1,146 @@
+{% extends "main_template.html" %} {% block content %}
+
+<!-- Breadcrumb Begin -->
+<br /><br /><br /><br /><br /><br /><br />
+<div class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="breadcrumb__text">
+          <h2>Blog</h2>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="breadcrumb__links">
+          <a href="/">Home</a>
+          <span>Blog</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Blog Section Begin -->
+<section class="blog spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div id="product-container">
+          <!-- Blog posts will be dynamically loaded here -->
+          {% for user in users %}
+          <div class="blog__item">
+            <div
+              class="blog__item__pic set-bg edges"
+              data-setbg="{{ url_for('static', filename='img/upload_folder/' + user[4]) }}"
+            >
+              <div class="blog__pic__inner">
+                <div class="label edges">Recipes</div>
+                <ul>
+                  <li>By <span>{{ user[2] }}</span></li>
+                  <li>{{ user[3] }}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="blog__item__text">
+              <h2>{{ user[0] }}</h2>
+              <p>
+                {% set words = user[1].split() %} {{ words[:15]|join(' ')|safe
+                }}{% if words|length > 15 %}...{% endif %}
+              </p>
+              <a href="/blog-details?id={{ user[5] }}">READ MORE</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="blog__sidebar">
+          <div class="blog__sidebar__search">
+            <form id="blogSearch-form" onsubmit="return false;">
+              <input
+                class="edges"
+                id="blogSearch-input"
+                type="text"
+                placeholder="Enter keyword"
+              />
+              <button type="submit" id="blogSearch-button">
+                <i class="fa fa-search"></i>
+              </button>
+            </form>
+          </div>
+          <div class="blog__sidebar__item">
+            <h5>Follow me</h5>
+            <div class="blog__sidebar__social">
+              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a href="#"><i class="fa fa-youtube-play"></i></a>
+              <a href="#"><i class="fa fa-instagram"></i></a>
+            </div>
+          </div>
+          <div class="blog__sidebar__item">
+            <h5>Recent posts</h5>
+            {% for user in users[:5] %}
+            <div class="blog__sidebar__recent">
+              <a
+                href="/blog-details?id={{ user[5] }}"
+                class="blog__sidebar__recent__item"
+              >
+                <div class="blog__sidebar__recent__item__pic">
+                  <img
+                    class="edges"
+                    src="{{ url_for('static', filename='img/upload_folder/' + user[4]) }}"
+                    width="90"
+                    height="90"
+                    alt="Resized Image"
+                  />
+                </div>
+                <div class="blog__sidebar__recent__item__text">
+                  <h4>{{ user[0] }}</h4>
+                  <span>{{ user[3] }}</span>
+                </div>
+              </a>
+              {% endfor %}
+              <br />
+            </div>
+          </div>
+          <div class="blog__sidebar__item">
+            <h5>NEWsLETTeR</h5>
+            <p>
+              Subscribe to our newsletter and get our newest updates right on
+              your inbox.
+            </p>
+            <div id="commentBlog-section"></div>
+            <form
+              method="post"
+              id="subscriptionBlog_Form"
+              action="/main_template"
+            >
+              <input
+                type="text"
+                name="email"
+                class="edges"
+                placeholder="Your email"
+                id="subscriptionBlog_email"
+              />
+              <label for="agg">
+                I agree to the terms & conditions
+                <input type="checkbox" id="agg" />
+                <span class="checkmark"></span>
+              </label>
+              <button
+                type="submit"
+                id="subscriptionBlog_submit"
+                class="site-btn edges"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Blog Section End -->
+
+{% endblock %}

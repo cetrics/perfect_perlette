@@ -1,0 +1,61 @@
+{% extends "main_template.html" %}
+
+{% block content %}
+  <!-- Breadcrumb Begin -->
+  <br><br><br><br><br><br><br><br>
+  <div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <!-- Search Results Section -->
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__text">
+                    <h2>Search</h2>
+                </div>
+                <br>
+                <h3 style="color: black;">Search Results for "{{ query }}"</h3>
+                <!-- Results -->
+                {% if results %}
+                <ul>
+                    {% for item in results %}
+                        <li style="font-size: 20px;" class="blog__item__text">
+                            <a href="{{ item['link'] }}">{{ item['name'] }}</a> - {{ item['category'] }}
+                            {% if item['match_score'] %}
+                                <br><small>Match Score: {{ item['match_score'] }}%</small>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Pagination Controls -->
+                <nav>
+                    <ul class="pagination" style="margin-top: 20px;">
+                        {% if page > 1 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?query={{ query }}&page={{ page - 1 }}&sort_by={{ request.args.get('sort_by', 'name') }}">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% if has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?query={{ query }}&page={{ page + 1 }}&sort_by={{ request.args.get('sort_by', 'name') }}">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% else %}
+                <p>No results found.</p>
+                {% endif %}
+            </div>
+
+            <!-- Breadcrumb Links -->
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__links">
+                    <a href="/">Home</a>
+                    <span>Shop</span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <br>
+  <!-- Breadcrumb End -->
+{% endblock %}

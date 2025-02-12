@@ -1,0 +1,58 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#popup {
+    display: none;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+#popup.show {
+    display: block;
+    opacity: 1;
+    max-height: 200px;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    font-size: 16px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-bottom: 2px solid #007BFF;
+}
+
+.oval-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.oval-button:disabled {
+    background-color: #b0c4de;
+    cursor: not-allowed;
+}
+.edges {
+    border-radius: 13px;
+}
+.subscription{
+    cursor: pointer;
+}
+.subscription{
+    cursor: not-allowed;
+}

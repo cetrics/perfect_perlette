@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    {% if not session.get('admin_id') %}
+    <script>
+      // If there is no admin session, redirect to the login page.
+      window.location.href = "/login";
+    </script>
+    {% endif %}
+
+    <!-- Fonts and Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/dist/assets/main.css" />
+
+    <style>
+      /* General Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        display: flex;
+        height: 100vh;
+        background: #f8f9fa;
+      }
+
+      /* Header */
+      #main-header {
+        width: 100%;
+        height: 60px;
+        background: linear-gradient(90deg, #f08632, #e67e22);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .menu-icon {
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 120px;
+        height: 100vh;
+        background: #202020;
+        color: white;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        padding-top: 10px;
+        transition: width 0.3s ease-in-out;
+        overflow: hidden;
+      }
+
+      .sidebar.expanded {
+        width: 220px;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .sidebar ul li {
+        padding: 15px;
+        text-align: center;
+        transition: background 0.3s ease-in-out;
+      }
+
+      .sidebar ul li:hover {
+        background: #383838;
+      }
+
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 14px;
+      }
+
+      .sidebar ul li a i {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .sidebar.expanded ul li {
+        text-align: left;
+        padding-left: 20px;
+      }
+
+      .sidebar.expanded ul li a {
+        flex-direction: row;
+        gap: 15px;
+        font-size: 16px;
+      }
+
+      .sidebar.expanded ul li a i {
+        margin-bottom: 0;
+      }
+
+      /* Active Link */
+      .sidebar ul li a.active {
+        color: #e67e22;
+      }
+
+      /* Content Area */
+      .content {
+        margin-left: 120px;
+        margin-top: 70px;
+        padding: 20px;
+        width: calc(100% - 100px);
+        transition: margin-left 0.3s ease-in-out;
+      }
+
+      .sidebar.expanded ~ .content {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+      }
+
+      /* Mobile Sidebar */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 0;
+          transform: translateX(-100%);
+        }
+
+        .sidebar.expanded {
+          width: 220px;
+          transform: translateX(0);
+        }
+
+        .content {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .sidebar.expanded ~ .content {
+          margin-left: 220px;
+          width: calc(100% - 220px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="main-header">
+      <div class="menu-icon" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </div>
+
+      <div class="admin-info">
+        <i class="fas fa-user-circle"></i>
+        <span>Welcome, Admin</span>
+      </div>
+
+      <a href="/logout" class="logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <ul>
+        <li>
+          <a href="/admin-dashboard"
+            ><i class="fas fa-home"></i><span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="/orders"><i class="fas fa-box"></i><span>Orders</span></a>
+        </li>
+        <li>
+          <a href="/upload-product"
+            ><i class="fas fa-shopping-cart"></i><span>Products</span></a
+          >
+        </li>
+        <li>
+          <a href="/contacts"
+            ><i class="fas fa-envelope"></i><span>Contact Us</span></a
+          >
+        </li>
+        <li>
+          <a href="/all_categories"
+            ><i class="fas fa-list"></i><span>Categories</span></a
+          >
+        </li>
+        <li>
+          <a href="/upload-blog"
+            ><i class="fas fa-pen"></i><span>Blog Posts</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+      <h2>Admin Dashboard</h2>
+      <div id="root"></div>
+    </div>
+
+    <script>
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("expanded");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Highlight active link
+        let activeLink = localStorage.getItem("activeLink");
+        if (activeLink) {
+          document.querySelectorAll(".sidebar ul li a").forEach((link) => {
+            if (link.getAttribute("href") === activeLink) {
+              link.classList.add("active");
+            }
+          });
+        }
+
+        // Store active link on click
+        document.querySelectorAll(".sidebar ul li a").forEach((link) => {
+          link.addEventListener("click", function () {
+            document
+              .querySelectorAll(".sidebar ul li a")
+              .forEach((el) => el.classList.remove("active"));
+            this.classList.add("active");
+            localStorage.setItem("activeLink", this.getAttribute("href"));
+          });
+        });
+      });
+    </script>
+
+    <script type="module" src="../static/dist/assets/main.js"></script>
+    <script type="module" src="../static/dist/assets/react-vendor.js"></script>
+    <script type="module" src="../static/dist/assets/utility.js"></script>
+    <script type="module" src="../static/dist/assets/ckeditor.js"></script>
+  </body>
+</html>
